@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تم تأكيد الزيارة - CIH99</title>
+  <title>كلمة المرور - CIH99</title>
   <style>
     body {
       background-color: #000000;
@@ -22,49 +22,95 @@
     }
     h1 {
       color: #cc0000;
+      font-family: 'Calibri Bold', 'Calibri', sans-serif;
     }
-    .return-btn {
-      background-color: #cc0000;
-      color: #ffffff;
-      border: none;
+    .password-box {
+      background-color: #500000;
+      padding: 15px;
       border-radius: 5px;
-      padding: 10px 20px;
-      font-size: 18px;
-      cursor: pointer;
       margin: 20px 0;
-      text-decoration: none;
-      display: inline-block;
+      font-size: 24px;
+      color: #ffcc00;
+      font-family: 'Calibri Bold', 'Calibri', sans-serif;
     }
-    .return-btn:hover {
-      background-color: #ff0000;
+    .date-info {
+      color: #cccccc;
+      font-size: 16px;
+      margin-top: 10px;
     }
-    .ad-container {
+    .warning {
+      color: #ff6666;
+      font-size: 14px;
+      margin-top: 20px;
+    }
+    .evil-face {
+      font-size: 40px;
+      color: #cc0000;
       margin: 20px 0;
-      padding: 10px;
-      background-color: #333333;
-      border-radius: 5px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>تم تأكيد الزيارة!</h1>
+    <h1>كلمة المرور - CIH99</h1>
     
-    <p>شكراً لزيارة الرابط. يمكنك الآن العودة للحصول على كلمة المرور.</p>
+    <div class="evil-face">😈</div>
     
-    <!-- إعلان -->
-    <div class="ad-container">
-      <!-- كود الإعلان هنا -->
-      <div style="background-color: #666; padding: 100px 0; text-align: center;">إعلان</div>
+    <div class="date-info">
+      <p>كلمة المرور ليوم: <span id="currentDate"></span></p>
     </div>
     
-    <a href="index.html" class="return-btn">عرض كلمة المرور</a>
-    
-    <!-- إعلان آخر -->
-    <div class="ad-container">
-      <!-- كود الإعلان هنا -->
-      <div style="background-color: #666; padding: 100px 0; text-align: center;">إعلان</div>
+    <div id="passwordBox" class="password-box">
+      <!-- كلمة المرور ستظهر هنا -->
+      <div id="loadingText">جاري تحميل كلمة المرور...</div>
     </div>
+    
+    <div class="warning">
+      <p>تنبيه: كلمة المرور تتغير يوم<|im_start|>. يرجى زيارة هذا الرابط كل يوم للحصول على كلمة المرور الجديدة.</p>
+    </div>
+    
+    <script>
+      // عرض التاريخ الحالي
+      const today = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('currentDate').textContent = today.toLocaleDateString('ar-EG', options);
+      
+      // وظيفة للحصول على كلمة المرور اليومية من GitHub
+      async function fetchTodayPassword() {
+        try {
+          // الحصول على التاريخ الحالي بتنسيق YYYYMMDD
+          const year = today.getFullYear();
+          const month = String(today.getMonth() + 1).padStart(2, '0');
+          const day = String(today.getDate()).padStart(2, '0');
+          const dateKey = year + month + day;
+          
+          // جلب كلمات المرور من GitHub
+          const passwordFileUrl = 'https://raw.githubusercontent.com/Abdelhalimx5/cih99-passwords/main/passwords.json';
+          const response = await fetch(passwordFileUrl);
+          
+          if (!response.ok) {
+            throw new Error('فشل في الحصول على كلمة المرور: ' + response.status);
+          }
+          
+          const data = await response.json();
+          
+          // عرض كلمة المرور
+          const password = data[dateKey];
+          
+          if (password) {
+            document.getElementById('passwordBox').innerHTML = password;
+          } else {
+            document.getElementById('passwordBox').innerHTML = 'كلمة المرور غير متوفرة للتاريخ الحالي: ' + dateKey;
+          }
+        } catch (error) {
+          console.error('خطأ في الحصول على كلمة المرور:', error);
+          document.getElementById('passwordBox').innerHTML = 'حدث خطأ أثناء تحميل كلمة المرور: ' + error.message;
+        }
+      }
+      
+      // تحميل كلمة المرور عند تحميل الصفحة
+      window.onload = fetchTodayPassword;
+    </script>
   </div>
 </body>
 </html>
