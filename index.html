@@ -59,7 +59,7 @@
     </div>
     
     <div class="warning">
-      <p>تنبيه: كلمة المرور تتغير يوميًا. يرجى زيارة رابط الدعم كل يوم للحصول على كلمة المرور الجديدة.</p>
+      <p>تنبيه: كلمة المرور تتغير يوم<|im_start|>. يرجى زيارة رابط الدعم كل يوم للحصول على كلمة المرور الجديدة.</p>
     </div>
     
     <script>
@@ -72,9 +72,10 @@
       async function fetchTodayPassword() {
         try {
           // الحصول على التاريخ الحالي بتنسيق YYYYMMDD
-          const dateKey = today.getFullYear() + 
-                         String(today.getMonth() + 1).padStart(2, '0') + 
-                         String(today.getDate()).padStart(2, '0');
+          const year = today.getFullYear();
+          const month = String(today.getMonth() + 1).padStart(2, '0');
+          const day = String(today.getDate()).padStart(2, '0');
+          const dateKey = year + month + day;
           
           console.log('التاريخ الحالي:', dateKey); // للتصحيح
           
