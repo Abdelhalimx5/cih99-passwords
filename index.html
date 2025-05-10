@@ -59,7 +59,7 @@
     </div>
     
     <div class="warning">
-      <p>تنبيه: كلمة المرور تتغير يوم<|im_start|>. يرجى زيارة رابط الدعم كل يوم للحصول على كلمة المرور الجديدة.</p>
+      <p>تنبيه: كلمة المرور تتغير يوميًا. يرجى زيارة رابط الدعم كل يوم للحصول على كلمة المرور الجديدة.</p>
     </div>
     
     <script>
@@ -76,21 +76,36 @@
                          String(today.getMonth() + 1).padStart(2, '0') + 
                          String(today.getDate()).padStart(2, '0');
           
+          console.log('التاريخ الحالي:', dateKey); // للتصحيح
+          
           // جلب كلمات المرور من GitHub
           const passwordFileUrl = 'https://raw.githubusercontent.com/Abdelhalimx5/cih99-passwords/main/passwords.json';
+          console.log('جاري جلب كلمات المرور من:', passwordFileUrl); // للتصحيح
+          
           const response = await fetch(passwordFileUrl);
           
           if (!response.ok) {
-            throw new Error('فشل في الحصول على كلمة المرور');
+            throw new Error('فشل في الحصول على كلمة المرور: ' + response.status);
           }
           
-          const data = await response.json();
+          const text = await response.text();
+          console.log('محتوى الملف:', text); // للتصحيح
+          
+          const data = JSON.parse(text);
+          console.log('كلمات المرور:', data); // للتصحيح
           
           // عرض كلمة المرور
-          document.getElementById('passwordBox').innerHTML = data[dateKey] || 'كلمة المرور غير متوفرة';
+          const password = data[dateKey];
+          console.log('كلمة المرور للتاريخ', dateKey, ':', password); // للتصحيح
+          
+          if (password) {
+            document.getElementById('passwordBox').innerHTML = password;
+          } else {
+            document.getElementById('passwordBox').innerHTML = 'كلمة المرور غير متوفرة للتاريخ الحالي: ' + dateKey;
+          }
         } catch (error) {
-          console.error('خطأ:', error);
-          document.getElementById('passwordBox').innerHTML = 'حدث خطأ أثناء تحميل كلمة المرور. يرجى المحاولة مرة أخرى.';
+          console.error('خطأ في الحصول على كلمة المرور:', error);
+          document.getElementById('passwordBox').innerHTML = 'حدث خطأ أثناء تحميل كلمة المرور: ' + error.message;
         }
       }
       
