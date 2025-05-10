@@ -78,11 +78,13 @@
       // وظيفة للحصول على كلمة المرور اليومية من GitHub
       async function fetchTodayPassword() {
         try {
-          // استخدام تاريخ ثابت للاختبار
-          // يمكنك تغيير هذا التاريخ حسب الحاجة
-          const dateKey = "20240510"; // 10 مايو 2024
+          // الحصول على التاريخ الحالي بتنسيق YYYYMMDD
+          const year = today.getFullYear();
+          const month = String(today.getMonth() + 1).padStart(2, '0');
+          const day = String(today.getDate()).padStart(2, '0');
+          const dateKey = year + month + day;
           
-          console.log('التاريخ المستخدم:', dateKey);
+          console.log('التاريخ الحالي:', dateKey);
           
           // جلب كلمات المرور من GitHub
           const passwordFileUrl = 'https://raw.githubusercontent.com/Abdelhalimx5/cih99-passwords/main/passwords.json';
@@ -102,7 +104,7 @@
           if (password) {
             document.getElementById('passwordBox').innerHTML = password;
           } else {
-            document.getElementById('passwordBox').innerHTML = 'كلمة المرور غير متوفرة للتاريخ: ' + dateKey;
+            document.getElementById('passwordBox').innerHTML = 'كلمة المرور غير متوفرة للتاريخ الحالي: ' + dateKey;
           }
         } catch (error) {
           console.error('خطأ في الحصول على كلمة المرور:', error);
