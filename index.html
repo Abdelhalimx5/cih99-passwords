@@ -1,179 +1,25 @@
-<!DOCTYPE html>
-<html dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>كلمة المرور - CIH99</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      height: 100%;
-      font-family: 'Calibri', sans-serif;
-      direction: rtl;
-    }
-
-    canvas {
-      display: block;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 0;
-    }
-
-    body {
-      background-color: #000;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      text-align: center;
-    }
-
-    .container {
-      position: relative;
-      z-index: 1;
-      background-color: #1a1a1a;
-      border: 2px solid #cc0000;
-      border-radius: 10px;
-      padding: 30px;
-      max-width: 500px;
-      width: 90%;
-      box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-    }
-
-    h1 {
-      color: #cc0000;
-      margin-top: 0;
-      text-shadow: 0 0 10px #ff0000;
-      font-size: 28px;
-    }
-
-    p {
-      margin: 15px 0;
-      font-size: 16px;
-      line-height: 1.6;
-    }
-
-    .download-button {
-      display: inline-block;
-      background-color: #cc0000;
-      color: #fff;
-      padding: 15px 30px;
-      border-radius: 5px;
-      text-decoration: none;
-      font-size: 18px;
-      margin: 20px 0;
-      transition: all 0.3s ease;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-    }
-
-    .download-button:hover {
-      background-color: #ff0000;
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
-    }
-
-    .instructions {
-      font-size: 14px;
-      color: #cccccc;
-      margin-top: 20px;
-      text-align: right;
-    }
-
-    .footer {
-      margin-top: 30px;
-      font-size: 12px;
-      color: #888;
-    }
-
-    .footer a {
-      color: #cc0000;
-      text-decoration: none;
-    }
-
-    .footer a:hover {
-      text-decoration: underline;
-      color: #ff0000;
-    }
-  </style>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-</head>
-<body>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <canvas id="bgCanvas"></canvas>
-
-<div class="container">
-  <h1>كلمة مرور إضافة CIH99</h1>
-
-  <p>شكراً لتثبيت إضافة CIH99. للحصول على كلمة المرور اليومية، يرجى تحميل الملف من الرابط الآمن أدناه.</p>
-
-  <button class="download-button" onclick="revealLink()">تحميل ملف كلمة المرور</button>
-
-  <p class="instructions">
-    • اضغط على الزر أعلاه<br>
-    • انتظر 5 ثوانٍ في الصفحة التالية<br>
-    • افتح الملف لاستخراج كلمة المرور<br>
-    • الصق الكلمة في الإضافة لتفعيلها
-  </p>
-
-  <p>⚠️ ملاحظة: كلمة المرور تتجدد يومياً. يُرجى زيارة هذه الصفحة يوميًا للحصول على الكلمة الجديدة.</p>
-
-  <div class="footer">
-    تم التصميم بواسطة <a href="https://t.me/GurusVIP" target="_blank">CIH99</a>
-  </div>
-</div>
-
 <script>
-  function revealLink() {
-    const url = atob("aHR0cHM6Ly93d3cuZmlsZS11cGxvYWQub3JnL3k0YzFoNjUwY3Y3eg==");
-    window.open(url, '_blank');
-  }
-
-  // Three.js background animation
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
   const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bgCanvas'), alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
 
-  const geometry = new THREE.SphereGeometry(0.5, 32, 32);
-  const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-  const spheres = [];
-
-  for (let i = 0; i < 20; i++) {
-    const sphere = new THREE.Mesh(geometry, material.clone());
-    sphere.position.set(
-      (Math.random() - 0.5) * 10,
-      (Math.random() - 0.5) * 10,
-      (Math.random() - 0.5) * 10
-    );
-    scene.add(sphere);
-    spheres.push({ mesh: sphere, velocity: Math.random() * 0.01 + 0.005 });
-  }
+  const geometry = new THREE.BoxGeometry();
+  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+  const cube = new THREE.Mesh(geometry, material);
+  scene.add(cube);
 
   camera.position.z = 5;
 
   function animate() {
     requestAnimationFrame(animate);
-    spheres.forEach(({ mesh, velocity }) => {
-      mesh.rotation.x += velocity;
-      mesh.rotation.y += velocity;
-    });
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
     renderer.render(scene, camera);
   }
 
   animate();
-
-  window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  });
 </script>
-</body>
-</html>
