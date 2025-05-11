@@ -9,12 +9,21 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <style>
+    @font-face {
+      font-family: 'Calibri Bold';
+      src: url('https://db.onlinewebfonts.com/t/5e05c3e7a3218d9887b2b5a8c2b7c775.woff2') format('woff2'),
+           url('https://db.onlinewebfonts.com/t/5e05c3e7a3218d9887b2b5a8c2b7c775.woff') format('woff');
+      font-weight: bold;
+      font-style: normal;
+    }
+
     html, body {
       margin: 0;
       padding: 0;
       overflow: hidden;
       height: 100%;
-      font-family: 'Calibri', sans-serif;
+      font-family: 'Calibri Bold', 'Calibri', sans-serif;
+      font-weight: bold;
       direction: rtl;
     }
 
@@ -48,6 +57,14 @@
       text-shadow: 0 0 10px #ff0000;
       font-size: 28px;
       margin-top: 0;
+      font-family: 'Calibri Bold', 'Calibri', sans-serif;
+      font-weight: bold;
+    }
+
+    p {
+      margin: 15px 0;
+      font-size: 16px;
+      line-height: 1.5;
     }
 
     .download-button {
@@ -63,6 +80,8 @@
       border: none;
       cursor: pointer;
       box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+      font-family: 'Calibri Bold', 'Calibri', sans-serif;
+      font-weight: bold;
     }
 
     .download-button:hover {
@@ -76,6 +95,12 @@
       color: #cccccc;
       margin-top: 20px;
       text-align: right;
+    }
+
+    .warning {
+      color: #ffcc00;
+      text-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+      font-weight: bold;
     }
 
     .footer {
@@ -112,7 +137,7 @@
       • الصق الكلمة في الإضافة لتفعيلها
     </p>
 
-    <p>⚠️ ملاحظة: كلمة المرور تتجدد يومياً. يُرجى زيارة هذه الصفحة يوميًا للحصول على الكلمة الجديدة.</p>
+    <p class="warning">⚠️ ملاحظة: كلمة المرور تتجدد يوم<|im_start|>.3.2023.3.2023رجى زيارة هذه الصفحة يوم 3.2023 للحصول على الكلمة الجديدة.</p>
 
     <div class="footer">
       تم التصميم بواسطة <a href="https://t.me/GurusVIP" target="_blank">CIH99</a>
